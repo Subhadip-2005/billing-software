@@ -1,6 +1,12 @@
 import axios from "axios";
 
 const API = "http://127.0.0.1:8000/api";
+// Auto-attach token to every request
+axios.interceptors.request.use(config => {
+  const token = localStorage.getItem("token");
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+});
 // Auth
 export const loginUser = (data) => axios.post(`${API}/auth/login`, data);
 export const getMe = () => axios.get(`${API}/auth/me`);

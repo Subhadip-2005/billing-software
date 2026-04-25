@@ -2,8 +2,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import axios from "axios";
 
 const AuthContext = createContext(null);
-const API = import.meta.env.VITE_BACKEND_URL + "/api";
-
+const API = "https://billing-software-production-ff58.up.railway.app/api";
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

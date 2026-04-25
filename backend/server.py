@@ -24,7 +24,12 @@ app.add_middleware(CORSMiddleware,
 )
 
 # MongoDB
-client = AsyncIOMotorClient(os.getenv("MONGODB_URL", "mongodb://localhost:27017"))
+client = AsyncIOMotorClient(
+    os.getenv("MONGODB_URL", "mongodb://localhost:27017"),
+    serverSelectionTimeoutMS=5000,
+    connectTimeoutMS=5000,
+    maxPoolSize=10
+)
 db = client.medbill
 
 JWT_SECRET = os.getenv("JWT_SECRET", "your-secret-key")

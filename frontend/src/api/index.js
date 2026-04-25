@@ -1,12 +1,14 @@
 import axios from "axios";
 
-const API = "https://billing-software-production-ff58.up.railway.app/api";
+const API = import.meta.env.VITE_BACKEND_URL + "/api";
+
 // Auto-attach token to every request
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;
 });
+
 // Auth
 export const loginUser = (data) => axios.post(`${API}/auth/login`, data);
 export const getMe = () => axios.get(`${API}/auth/me`);

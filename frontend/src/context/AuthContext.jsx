@@ -3,6 +3,7 @@ import axios from "axios";
 
 const AuthContext = createContext(null);
 const API = "https://billing-software-production-ff58.up.railway.app/api";
+
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);

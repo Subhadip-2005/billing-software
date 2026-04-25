@@ -188,5 +188,9 @@ async def expiry_alerts(user=Depends(get_current_user)):
     meds = await db.medicines.find({"expiry_date": {"$lte": threshold}}).to_list(100)
     return [str_id(m) for m in meds]
 
+@app.get("/api/health")
+async def health(): 
+    return {"status": "ok"}
+
 @app.get("/api/")
 async def root(): return {"message": "MedBill API running"}

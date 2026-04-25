@@ -1,9 +1,10 @@
 fastapi
 uvicorn
 motor
-pymongo
+pymongo[srv]
 python-jose[cryptography]
 pyjwt
-bcrypt
+bcrypt==4.0.1
 python-dotenv
 pydantic[email]
+dnspython

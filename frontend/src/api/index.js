@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = import.meta.env.VITE_BACKEND_URL + "/api";
+const API = (import.meta.env.VITE_BACKEND_URL || "http://127.0.0.1:8000") + "/api";
 
 // Auto-attach token to every request
 axios.interceptors.request.use(config => {

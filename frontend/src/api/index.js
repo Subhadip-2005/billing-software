@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = "http://127.0.0.1:8000/api";
+const API = "https://billing-software-production-ff58.up.railway.app/api";
 // Auto-attach token to every request
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem("token");

@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const API = "https://billing-software-production-ff58.up.railway.app/api";
-
+const API = "https://billing-software-3sud.vercel.app/api";
 axios.interceptors.request.use(config => {
   const token = localStorage.getItem("token");
   if (token) config.headers.Authorization = `Bearer ${token}`;

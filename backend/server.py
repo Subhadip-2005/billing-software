@@ -14,8 +14,14 @@ load_dotenv()
 app = FastAPI(title="MedBill API")
 
 app.add_middleware(CORSMiddleware,
-    allow_origins=["*"], allow_credentials=True,
-    allow_methods=["*"], allow_headers=["*"])
+    allow_origins=[
+        "http://localhost:5173",
+        "https://billing-software-rose-seven.vercel.app"
+    ],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"]
+)
 
 # MongoDB
 client = AsyncIOMotorClient(os.getenv("MONGODB_URL", "mongodb://localhost:27017"))

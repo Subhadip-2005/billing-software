@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const API = "http://127.0.0.1:8000/api";
+const API = "https://billing-software-production-ff58.up.railway.app/api";
 
 const Customers = () => {
   const [customers, setCustomers] = useState([]);

@@ -15,14 +15,31 @@ const PrintBill = ({ invoice, onClose }) => {
     ? new Date(created_at).toLocaleString("en-IN")
     : new Date().toLocaleString("en-IN");
 
-  const handlePrint = () => {
-    const printContent = document.getElementById("bill-print-content").innerHTML;
-    const originalBody = document.body.innerHTML;
-    document.body.innerHTML = printContent;
-    window.print();
-    document.body.innerHTML = originalBody;
-    window.location.reload();
-  };
+const handlePrint = () => {
+  const content = document.getElementById("bill-print-content").innerHTML;
+  const win = window.open("", "_blank", "width=400,height=600");
+  win.document.write(`
+    <html>
+      <head>
+        <title>Bill - ${invoice_number}</title>
+        <style>
+          body { font-family: 'Courier New', monospace; font-size: 11px; margin: 0; padding: 10px; }
+          * { box-sizing: border-box; }
+        </style>
+      </head>
+      <body>
+        ${content}
+        <script>
+          window.onload = function() {
+            window.print();
+            window.close();
+          }
+        </script>
+      </body>
+    </html>
+  `);
+  win.document.close();
+};
 
   useEffect(() => {
     document.title = `Bill - ${invoice_number}`;

@@ -13,7 +13,8 @@ const Billing = () => {
   const [customerName, setCustomerName] = useState(" ");
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const [discount, setDiscount] = useState();
-  const [discountType, setDiscountType] = useState("flat"); // "flat" | "percent"
+  // const [discountType, setDiscountType] = useState("flat"); // "flat" | "percent"
+  const [discountType, setDiscountType] = useState("percent");
   const [loading, setLoading] = useState(false);
   const [showInvoice, setShowInvoice] = useState(false);
   const [lastInvoice, setLastInvoice] = useState(null);
@@ -272,9 +273,9 @@ const Billing = () => {
           <div>
             <label className="block text-xs font-medium text-gray-600 mb-1">Discount</label>
             {/* Toggle: Flat / Percent */}
-            <div className="flex gap-1.5 mb-1.5">
+            {/* <div className="flex gap-1.5 mb-1.5">
               {[
-                { value: "flat", label: "₹ Flat" },
+                // { value: "flat", label: "₹ Flat" },
                 { value: "percent", label: "% Percent" },
               ].map(t => (
                 <button
@@ -287,11 +288,12 @@ const Billing = () => {
                   {t.label}
                 </button>
               ))}
-            </div>
+            </div> */}
             {/* Input with dynamic prefix */}
             <div className="relative">
               <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm select-none">
-                {discountType === "flat" ? "₹" : "%"}
+                {/* {discountType === "flat" ? "₹" : "%"} */}
+                %
               </span>
               <input
                 type="number"

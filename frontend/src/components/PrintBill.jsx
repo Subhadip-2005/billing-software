@@ -15,20 +15,27 @@ const PrintBill = ({ invoice, onClose }) => {
     ? new Date(created_at).toLocaleString("en-IN")
     : new Date().toLocaleString("en-IN");
 
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    const printContent = document.getElementById("bill-print-content").innerHTML;
+    const originalBody = document.body.innerHTML;
+    document.body.innerHTML = printContent;
+    window.print();
+    document.body.innerHTML = originalBody;
+    window.location.reload();
+  };
 
   useEffect(() => {
     document.title = `Bill - ${invoice_number}`;
     return () => { document.title = "MedBill"; };
-  }, [ invoice_number ]);
+  }, [invoice_number]);
 
   return (
     <>
       {/* Screen overlay */}
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 print:hidden">
+      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
         <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
           {/* Action bar */}
-          <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white print:hidden">
+          <div className="flex items-center justify-between px-5 py-3 bg-emerald-600 text-white">
             <h3 className="font-semibold text-sm">Bill Preview — {invoice_number}</h3>
             <div className="flex gap-2">
               <button onClick={handlePrint}
@@ -42,50 +49,26 @@ const PrintBill = ({ invoice, onClose }) => {
             </div>
           </div>
 
-          {/* Bill content (also used for print) */}
-          <div id="bill-content" className="p-5 font-mono text-xs text-gray-800 max-h-[80vh] overflow-y-auto">
-            <BillContent
-              invoice_number={invoice_number}
-              customerName={customerName}
-              cart={cart}
-              grandTotal={grandTotal}
-              gstTotal={gstTotal}
-              paymentMethod={paymentMethod}
-              discount={discount}
-              subtotal={subtotal}
-              discountPercent={discountPercent}
-              printDate={printDate}
-              cashierName={cashierName}
-            />
+          {/* Bill preview */}
+          <div className="p-5 font-mono text-xs text-gray-800 max-h-[80vh] overflow-y-auto">
+            <div id="bill-print-content">
+              <BillContent
+                invoice_number={invoice_number}
+                customerName={customerName}
+                cart={cart}
+                grandTotal={grandTotal}
+                gstTotal={gstTotal}
+                paymentMethod={paymentMethod}
+                discount={discount}
+                subtotal={subtotal}
+                discountPercent={discountPercent}
+                printDate={printDate}
+                cashierName={cashierName}
+              />
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Print-only full page */}
-      <div className="hidden print:block">
-        <BillContent
-          invoice_number={invoice_number}
-          customerName={customerName}
-          cart={cart}
-          grandTotal={grandTotal}
-          gstTotal={gstTotal}
-          paymentMethod={paymentMethod}
-          discount={discount}
-          subtotal={subtotal}
-          discountPercent={discountPercent}
-          printDate={printDate}
-          cashierName={cashierName}
-        />
-      </div>
-
-      {/* Print styles */}
-      <style>{`
-        @media print {
-          * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
-          body > *:not(.print\\:block) { display: none !important; }
-          @page { margin: 6mm; size: 80mm auto; }
-        }
-      `}</style>
     </>
   );
 };

@@ -15,7 +15,11 @@ const PrintBill = ({ invoice, onClose }) => {
     ? new Date(created_at).toLocaleString("en-IN")
     : new Date().toLocaleString("en-IN");
 
-  const handlePrint = () => window.print();
+  const handlePrint = () => {
+    document.body.classList.add("printing-bill");
+    window.print();
+    document.body.classList.remove("printing-bill");
+  };
 
   useEffect(() => {
     document.title = `Bill - ${invoice_number}`;
@@ -82,6 +86,12 @@ const PrintBill = ({ invoice, onClose }) => {
       <style>{`
         @media print {
           * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+          body:not(.printing-bill) .fixed { display: none !important; }
+          body.printing-bill .fixed { display: none !important; }
+          body.printing-bill .hidden { display: block !important; }
+          body:not(.printing-bill) .hidden { display: none !important; }
+          @page { margin: 6mm; size: 80mm auto; }
+        }
           body > *:not(.print\\:block) { display: none !important; }
           @page { margin: 6mm; size: 80mm auto; }
         }
